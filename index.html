@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dialogue Tree Builder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="container">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div id="sidebar-header">
+        <h2>Characters</h2>
+      </div>
+      <div id="characterList"></div>
+      <button id="addCharacterButton">Add Character</button>
+      <!-- Export and Import Buttons -->
+      <button id="exportButton">Export Data</button>
+      <button id="importButton">Import Data</button>
+      <!-- Hidden File Input for Import -->
+      <input type="file" id="importFileInput" accept=".json" style="display: none;" />
+    </div>
+    <div id="storyMapWrapper">
+      <div id="storyMap">
+        <svg id="connectorCanvas"></svg>
+        <div id="canvasMessage">
+          Drag a character from the sidebar onto the screen to start a
+          dialogue tree.<br />
+          Drop a character card onto an existing card to link them.
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
