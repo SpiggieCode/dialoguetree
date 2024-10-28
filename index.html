@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Dialogue Tree Builder</title>
+  <link rel="icon" href="wizard_icon.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -10,6 +11,7 @@
     <!-- Sidebar -->
     <div id="sidebar">
       <div id="sidebar-header">
+        <img src="wizard_icon.png" alt="Logo" id="sidebar-logo" />
         <h2>Characters</h2>
       </div>
       <div id="characterList"></div>
@@ -26,11 +28,21 @@
         <div id="canvasMessage">
           Drag a character from the sidebar onto the screen to start a
           dialogue tree.<br />
-          Drop a character card onto an existing card to link them.
+          Drop a character card onto an existing card to link them, or right click on the card for additional options.
         </div>
       </div>
     </div>
   </div>
+  <!-- Menu for cards -->
+  <div id="contextMenu" class="context-menu">
+    <ul>
+      <li id="linkTo">Link to...</li>
+      <li id="changeParent">Change Parent</li>
+      <li id="deleteNode">Delete Node</li>
+      <li id="clearLinks">Clear All Links</li> <!-- New Menu Item -->
+    </ul>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
