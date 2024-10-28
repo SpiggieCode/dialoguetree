@@ -61,7 +61,7 @@ body {
 
 #sidebar-logo {
     width: 40px; /* Adjust size as needed */
-    height: auto;
+    height: 40px;
     display: block;
     margin: 0 auto 10px auto; /* Center and add space below the logo */
   }
