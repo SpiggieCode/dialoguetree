@@ -203,7 +203,7 @@
   function getTrashIconSVG() {
     return `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="M320-120q-33 0-56.5-23.5T240-200v-520h-40v-80h200v-40h160v40h200v80h-40v520q0 33-23.5 56.5T640-120H320Zm320-600H320v520h320v-520ZM400-300h80v-320h-80v320Zm160 0h80v-320h-80v320Z"/>
+          <path d="M320-120q-33 0-56.5-23.5T240-200v-520h-40v-80h200v-40h160v40h200v80h-40v520q0 33-23.5 56.5T640-120H320Zm320-600H320v520h320v-520ZM400-300h80v-320h-80v320Zm160-0h80v-320h-80v320Z"/>
         </svg>
       `;
   }
@@ -248,7 +248,7 @@
       name: "Dialogue",
       icon: `
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-        <path d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/>
+        <path d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/>
       </svg>
     `
     },
@@ -279,7 +279,7 @@
     const nodeId = `node-${nodeCount++}`;
     const node = {
       id: nodeId,
-      type: type, // Default type is 'dialogue'
+      type: type, // 'dialogue', 'action', or 'choice'
       dialogue: dialogue,
       parentIds: parentIds,
       characterId: character.id,
@@ -329,16 +329,16 @@
     updateCharacterSelectOptions(characterSelect, node.characterId);
 
     characterSelect.addEventListener("change", (e) => {
-        const selectedCharacter = characters.find((c) => c.id === e.target.value);
-        if (selectedCharacter) {
-            Object.assign(node, {
-                characterId: selectedCharacter.id,
-                character: selectedCharacter.name,
-                color: selectedCharacter.color,
-            });
-            nodeElement.style.backgroundColor = node.color;
-            updateStoryMapSize();
-        }
+      const selectedCharacter = characters.find((c) => c.id === e.target.value);
+      if (selectedCharacter) {
+        Object.assign(node, {
+          characterId: selectedCharacter.id,
+          character: selectedCharacter.name,
+          color: selectedCharacter.color,
+        });
+        nodeElement.style.backgroundColor = node.color;
+        updateStoryMapSize();
+      }
     });
 
     header.appendChild(characterSelect);
@@ -354,43 +354,43 @@
     customDropdown.className = "custom-dropdown";
 
     function populateDropdown() {
-        customDropdown.innerHTML = ''; // Clear previous dropdown content
-        const dropdownList = document.createElement("ul");
-        for (const [type, data] of Object.entries(NODE_TYPES)) {
-            const listItem = document.createElement("li");
-            listItem.textContent = data.name;
-            listItem.addEventListener("click", () => {
-                node.type = type;
-                nodeElement.className = `node ${node.type}`;
-                typeIconWrapper.innerHTML = getNodeTypeIcon(node.type);
-                customDropdown.style.display = "none";
-                updateConnectorPositions();
-            });
-            dropdownList.appendChild(listItem);
-        }
-        customDropdown.appendChild(dropdownList);
+      customDropdown.innerHTML = ''; // Clear previous dropdown content
+      const dropdownList = document.createElement("ul");
+      for (const [type, data] of Object.entries(NODE_TYPES)) {
+        const listItem = document.createElement("li");
+        listItem.textContent = data.name;
+        listItem.addEventListener("click", () => {
+          node.type = type;
+          nodeElement.className = `node ${node.type}`;
+          typeIconWrapper.innerHTML = getNodeTypeIcon(node.type);
+          customDropdown.style.display = "none";
+          updateConnectorPositions();
+        });
+        dropdownList.appendChild(listItem);
+      }
+      customDropdown.appendChild(dropdownList);
     }
 
     populateDropdown(); // Initially populate the dropdown
 
     // Event listener to toggle dropdown
     typeIconWrapper.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent triggering other click events
+      e.stopPropagation(); // Prevent triggering other click events
 
-        // Toggle the current dropdown's visibility
-        const isOpen = customDropdown.style.display === "block";
-        document.querySelectorAll(".custom-dropdown").forEach((dropdown) => {
-            dropdown.style.display = "none";
-        });
-        customDropdown.style.display = isOpen ? "none" : "block";
-        populateDropdown(); // Repopulate the dropdown each time
+      // Toggle the current dropdown's visibility
+      const isOpen = customDropdown.style.display === "block";
+      document.querySelectorAll(".custom-dropdown").forEach((dropdown) => {
+        dropdown.style.display = "none";
+      });
+      customDropdown.style.display = isOpen ? "none" : "block";
+      populateDropdown(); // Repopulate the dropdown each time
     });
 
     // Close dropdown when clicking outside
     document.addEventListener("click", (e) => {
-        if (!typeIconWrapper.contains(e.target)) {
-            customDropdown.style.display = "none";
-        }
+      if (!typeIconWrapper.contains(e.target)) {
+        customDropdown.style.display = "none";
+      }
     });
 
     header.appendChild(typeIconWrapper);
@@ -402,7 +402,7 @@
     dialogueTextArea.placeholder = "Dialogue";
     dialogueTextArea.value = node.dialogue;
     dialogueTextArea.addEventListener("input", (e) => {
-        node.dialogue = e.target.value;
+      node.dialogue = e.target.value;
     });
 
     // Assemble node element
@@ -411,14 +411,14 @@
 
     // Add context menu event listener
     nodeElement.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        selectedNode = node;
+      e.preventDefault();
+      e.stopPropagation();
+      selectedNode = node;
 
-        // Position the context menu
-        contextMenu.style.top = `${e.clientY}px`;
-        contextMenu.style.left = `${e.clientX}px`;
-        contextMenu.style.display = "block";
+      // Position the context menu
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.style.display = "block";
     });
 
     // Make the node draggable and enable drop
@@ -427,10 +427,7 @@
     enableNodeDrop(nodeElement);
 
     return nodeElement;
-}
-
-
-
+  }
 
   // Handle clicks outside the context menu to close it
   document.addEventListener("click", (e) => {
@@ -478,7 +475,6 @@
     }
   });
 
-
   /**
    * Clears all incoming and outgoing links for a given node.
    * @param {string} nodeId - The ID of the node whose links are to be cleared.
@@ -511,27 +507,16 @@
       // Remove the connector from the connectors array
       connectors = connectors.filter(c => c !== connector);
 
-      // Remove the parentId from the node's parentIds
-      const parentNode = nodes.find(n => n.id === connector.parentElement.id);
-      if (parentNode) {
-        // Optional: If nodes track their children, update them here
-        // Currently, only parentIds are tracked
-      }
-
       // Remove the parentId from the selected node's parentIds
       const selectedNodeData = nodes.find(n => n.id === nodeId);
       if (selectedNodeData) {
         selectedNodeData.parentIds = selectedNodeData.parentIds.filter(pid => pid !== connector.parentElement.id);
       }
     });
-
   }
 
   // Function to initiate linking process
   function initiateLinking(sourceNode) {
-    // Removed alert prompt
-    // alert("Select the target node to link to."); // Removed alert
-
     // Remove any existing 'selectable' outlines
     document.querySelectorAll(".node").forEach((nodeElement) => {
       nodeElement.classList.remove("selectable");
@@ -616,20 +601,43 @@
   }
 
 
-  // Function to link two nodes
+  /**
+   * Links a parent node to a child node.
+   * @param {string} parentId - The ID of the parent node.
+   * @param {string} childId - The ID of the child node.
+   */
   function linkNodes(parentId, childId) {
+    const parentNode = nodes.find((n) => n.id === parentId);
     const childNode = nodes.find((n) => n.id === childId);
-    if (childNode) {
-      // Prevent duplicate parent
-      if (!childNode.parentIds.includes(parentId)) {
-        childNode.parentIds.push(parentId);
-        const parentElement = document.getElementById(parentId);
-        const childElement = document.getElementById(childId);
-        drawConnector(parentElement, childElement);
-        updateStoryMapSize();
-      } else {
-        alert("These nodes are already linked.");
-      }
+
+    if (!parentNode || !childNode) {
+      alert("Invalid parent or child node.");
+      return;
+    }
+
+    // Prevent linking a node to itself
+    if (parentId === childId) {
+      alert("Cannot link a node to itself.");
+      return;
+    }
+
+    // Prevent duplicate links
+    if (childNode.parentIds.includes(parentId)) {
+      alert("These nodes are already linked.");
+      return;
+    }
+
+    // Link the nodes by adding the parentId to childNode's parentIds
+    childNode.parentIds.push(parentId);
+
+    const parentElement = document.getElementById(parentId);
+    const childElement = document.getElementById(childId);
+    
+    if (parentElement && childElement) {
+      drawConnector(parentElement, childElement);
+      updateStoryMapSize();
+    } else {
+      console.error("Parent or Child element not found in the DOM.");
     }
   }
 
@@ -715,8 +723,6 @@
         Object.assign(node, updates);
         const nodeElement = document.getElementById(node.id);
         if (nodeElement) {
-          const characterSelect = nodeElement.querySelector(".character-select");
-          //characterSelect.style.backgroundColor = node.color;
           nodeElement.style.backgroundColor = node.color;
         }
       }
@@ -761,8 +767,8 @@
         : null;
       const newTop = lastRootElement
         ? parseFloat(lastRootElement.style.top) +
-        lastRootElement.offsetHeight +
-        SPACING_Y
+          lastRootElement.offsetHeight +
+          SPACING_Y
         : 100;
 
       element.style.left = "100px";
@@ -892,8 +898,6 @@
         document.removeEventListener("mousemove", onMouseMove);
         document.removeEventListener("mouseup", onMouseUp);
 
-        // **Removed Collision Detection and Linking**
-
         // Update the stored original position to the new position
         element.dataset.originalLeft = element.style.left;
         element.dataset.originalTop = element.style.top;
@@ -904,22 +908,6 @@
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
     });
-  }
-
-  function linkNodes(parentId, childId) {
-    const childNode = nodes.find((n) => n.id === childId);
-    if (childNode) {
-      // Prevent duplicate parent
-      if (!childNode.parentIds.includes(parentId)) {
-        childNode.parentIds.push(parentId);
-        const parentElement = document.getElementById(parentId);
-        const childElement = document.getElementById(childId);
-        drawConnector(parentElement, childElement);
-        updateStoryMapSize();
-      } else {
-        alert("These nodes are already linked.");
-      }
-    }
   }
 
   function enableNodeDrop(nodeElement) {
@@ -1215,4 +1203,243 @@
     storyMap.innerHTML = '<svg id="connectorCanvas"></svg><div id="canvasMessage">Drag a character from the sidebar onto the screen to start a dialogue tree.<br />Drop a character card onto an existing card to link them.</div>';
     connectorCanvas = document.getElementById("connectorCanvas"); // Re-select the connectorCanvas
   }
+
+  // Simulation Modal Elements
+  const simulationModal = document.getElementById("simulationModal");
+  const simulationDialogue = document.getElementById("simulationDialogue");
+  const simulationChoices = document.getElementById("simulationChoices");
+  const simulationClose = document.getElementById("simulationClose");
+  const simulationBack = document.getElementById("simulationBack"); // Back Button
+  const simulationCharacter = document.getElementById("simulationCharacter");
+
+  // Add event listener to close simulation
+  simulationClose.addEventListener("click", () => {
+    endSimulation();
+  });
+
+  // Add event listener to Back button
+  simulationBack.addEventListener("click", () => {
+    if (simulationState.history.length > 0) {
+      simulationState.currentNodeId = simulationState.history.pop();
+      displayCurrentDialogue();
+    } else {
+      alert("No previous dialogue to return to.");
+    }
+  });
+
+// **Updated "Simulate" event listener**
+document.getElementById("simulate").addEventListener("click", () => {
+  if (selectedNode) {
+    // Determine if the selected node is a Choice node
+    if (selectedNode.type === 'choice') {
+      // Retrieve the parent node(s) of the Choice node
+      const parentNodes = nodes.filter(n => selectedNode.parentIds.includes(n.id));
+      
+      if (parentNodes.length === 0) {
+        alert("Selected Choice node has no parent. Cannot start simulation.");
+        return;
+      } else if (parentNodes.length > 1) {
+        alert("Selected Choice node has multiple parents. Simulation will start from the first parent.");
+      }
+      
+      const parentNodeId = parentNodes[0].id;
+      startSimulation(parentNodeId);
+    } else {
+      // Start simulation normally for Dialogue or Action nodes
+      startSimulation(selectedNode.id);
+    }
+    
+    contextMenu.style.display = "none";
+    selectedNode = null;
+  } else {
+    alert("Please select a node to start simulation.");
+  }
+});
+
+
+  /**
+   * Starts the simulation from a given node ID.
+   * @param {string} startNodeId - The ID of the node to start the simulation.
+   */
+  function startSimulation(startNodeId) {
+    simulationModal.style.display = "flex";
+    simulationState.currentNodeId = startNodeId;
+    simulationState.history = [];
+    displayCurrentDialogue();
+  }
+
+  /**
+   * Ends the simulation and hides the modal.
+   */
+  function endSimulation() {
+    simulationModal.style.display = "none";
+    simulationState.currentNodeId = null;
+    simulationState.history = [];
+    simulationDialogue.textContent = "";
+    simulationChoices.innerHTML = "";
+    simulationCharacter.textContent = "";
+    // Remove highlights
+    document.querySelectorAll(".node.active-simulation").forEach((node) => {
+      node.classList.remove("active-simulation");
+    });
+  }
+
+  /**
+   * Displays the current dialogue or action node and its choices in the simulation.
+   */
+  function displayCurrentDialogue() {
+    // Remove previous highlights
+    document.querySelectorAll(".node.active-simulation").forEach((node) => {
+      node.classList.remove("active-simulation");
+    });
+
+    if (!simulationState.currentNodeId) {
+      // Simulation has ended; show end message
+      simulationDialogue.innerHTML = "<em>End of the dialogue tree.</em>";
+      simulationChoices.innerHTML = "";
+      simulationCharacter.textContent = "";
+      simulationBack.style.display = simulationState.history.length > 0 ? "inline-block" : "none";
+      return;
+    }
+
+    let currentNode = nodes.find((n) => n.id === simulationState.currentNodeId);
+    if (!currentNode) {
+      simulationDialogue.innerHTML = "<em>End of the dialogue tree.</em>";
+      simulationChoices.innerHTML = "";
+      simulationCharacter.textContent = "";
+      simulationBack.style.display = simulationState.history.length > 0 ? "inline-block" : "none";
+      return;
+    }
+
+    // Highlight the current node
+    const currentNodeElement = document.getElementById(currentNode.id);
+    if (currentNodeElement) {
+      currentNodeElement.classList.add("active-simulation");
+    }
+
+    // Display character name at the top
+    simulationCharacter.textContent = `${currentNode.character} (${capitalizeFirstLetter(currentNode.type)})`;
+
+    // Find child nodes (nodes where current node is a parent)
+    const childNodes = nodes.filter((n) => n.parentIds.includes(currentNode.id));
+
+    // Reset choices
+    simulationChoices.innerHTML = "";
+
+    // Always display the dialogue/action text
+    if (currentNode.type === 'dialogue') {
+      simulationDialogue.textContent = `${currentNode.dialogue || "(No dialogue provided.)"}`;
+    } else if (currentNode.type === 'action') {
+      simulationDialogue.innerHTML = `<em>${currentNode.dialogue || "(No action provided.)"}</em>`;
+    }
+
+    // Check if all children are Choice nodes
+    const allChoices = childNodes.length > 0 && childNodes.every(node => node.type === 'choice');
+
+    if (childNodes.length > 1 && allChoices) {
+      // All children are Choice nodes; display them as choice buttons
+      childNodes.forEach((childNode) => {
+        const choiceButton = document.createElement("button");
+        choiceButton.textContent = `${childNode.character}: ${childNode.dialogue || `Option (${childNode.id})`}`;
+        choiceButton.classList.add("choice-button");
+        choiceButton.addEventListener("click", () => {
+          handleChoiceSelection(childNode);
+        });
+        simulationChoices.appendChild(choiceButton);
+      });
+      return;
+    }
+
+    if (childNodes.length > 1 && !allChoices) {
+      // Multiple children not all choices; display error
+      const errorMessage = document.createElement("div");
+      errorMessage.className = "error-message";
+      errorMessage.style.color = "#e74c3c"; // Optional: Style the error message in red
+      errorMessage.style.marginTop = "10px";
+      errorMessage.innerHTML = `<em>Current node has multiple children that are not all Choice nodes. Please ensure all children are Choice nodes or limit to a single Dialogue/Action child.</em>`;
+      simulationChoices.appendChild(errorMessage);
+      return;
+    }
+
+    if (childNodes.length === 1) {
+      const childNode = childNodes[0];
+      if (childNode.type === 'choice') {
+        // Single child of type 'choice'
+        const choiceButton = document.createElement("button");
+        choiceButton.textContent = `${childNode.character}: ${childNode.dialogue || `Option (${childNode.id})`}`;
+        choiceButton.classList.add("choice-button");
+        choiceButton.addEventListener("click", () => {
+          handleChoiceSelection(childNode);
+        });
+        simulationChoices.appendChild(choiceButton);
+      } else {
+        // Single child of type 'dialogue' or 'action' - treat as 'Next' button
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Next"; // Ensure it only says "Next"
+        nextButton.classList.add("next-button");
+        nextButton.addEventListener("click", () => {
+          simulationState.history.push(currentNode.id);
+          simulationState.currentNodeId = childNode.id;
+          displayCurrentDialogue();
+        });
+        simulationChoices.appendChild(nextButton);
+      }
+      return;
+    }
+
+    // No children: show "Next" button to end simulation
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Next";
+    nextButton.classList.add("next-button");
+    nextButton.addEventListener("click", () => {
+      simulationState.history.push(currentNode.id);
+      simulationState.currentNodeId = null; // Set to null to trigger end message
+      displayCurrentDialogue();
+    });
+    simulationChoices.appendChild(nextButton);
+
+    // Show or hide the Back button based on history
+    simulationBack.style.display = simulationState.history.length > 0 ? "inline-block" : "none";
+  }
+
+/**
+ * Handles the selection of a choice during simulation.
+ * @param {Object} selectedNode - The node that was selected as a choice.
+ */
+function handleChoiceSelection(selectedNode) {
+  // Push current node to history
+  simulationState.history.push(simulationState.currentNodeId);
+  
+  // Find the child node(s) of the selected choice node
+  const childNodes = nodes.filter((n) => n.parentIds.includes(selectedNode.id));
+  
+  if (childNodes.length === 1) {
+    // If there's exactly one child, transition to it
+    simulationState.currentNodeId = childNodes[0].id;
+  } else if (childNodes.length > 1) {
+    // If multiple children, handle accordingly (optional)
+    // For simplicity, you can choose the first child or implement additional logic
+    simulationState.currentNodeId = childNodes[0].id;
+  } else {
+    // If no children, end the simulation
+    simulationState.currentNodeId = null;
+  }
+  
+  displayCurrentDialogue();
+}
+
+  /**
+   * Capitalizes the first letter of a given string.
+   * @param {string} string - The string to capitalize.
+   * @returns {string} - The capitalized string.
+   */
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const simulationState = {
+    currentNodeId: null,
+    history: [],
+  };
+
 })();

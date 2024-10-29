@@ -36,11 +36,25 @@
   <!-- Menu for cards -->
   <div id="contextMenu" class="context-menu">
     <ul>
+      <li id="simulate">Simulate</li> <!-- Simulate Menu Item -->
       <li id="linkTo">Link to...</li>
       <li id="changeParent">Change Parent</li>
       <li id="deleteNode">Delete Node</li>
-      <li id="clearLinks">Clear All Links</li> <!-- New Menu Item -->
+      <li id="clearLinks">Clear All Links</li>
     </ul>
+  </div>
+
+  <!-- Simulation Modal -->
+  <div id="simulationModal" class="simulation-modal" style="display: none;">
+    <div class="simulation-content">
+      <div id="simulationCharacter" class="simulation-character"></div> <!-- New Element -->
+      <div id="simulationDialogue" class="simulation-dialogue"></div>
+      <div id="simulationChoices" class="simulation-choices"></div>
+      <div class="simulation-navigation">
+        <button id="simulationBack" class="simulation-back" style="display: none;">Back</button>
+      </div>
+      <button id="simulationClose" class="simulation-close">Close Simulation</button>
+    </div>
   </div>
 
   <script src="script.js"></script>

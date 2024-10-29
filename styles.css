@@ -62,6 +62,7 @@ body {
 #sidebar-logo {
     width: 40px; /* Adjust size as needed */
     height: 40px;
+    height: auto;
     display: block;
     margin: 0 auto 10px auto; /* Center and add space below the logo */
   }
@@ -77,7 +78,7 @@ body {
     /* Stack child elements vertically */
     background-color: var(--node-background);
     border-radius: var(--border-radius);
-    padding: 15px;
+    padding: 10px;
     margin-bottom: 20px;
     box-shadow: 0 4px 6px var(--shadow-color);
     transition: background-color var(--transition-speed) ease;
@@ -220,12 +221,7 @@ body {
 #storyMapWrapper {
     flex-grow: 1;
     overflow: auto;
-    cursor: grab;
     position: relative;
-}
-
-#storyMapWrapper:active {
-    cursor: grabbing;
 }
 
 #storyMap {
@@ -265,6 +261,11 @@ body {
     flex-direction: column;
     color: var(--text-color);
     transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+    cursor: grab;
+}
+
+.node:active {
+    cursor: grabbing;
 }
 
 
@@ -508,6 +509,138 @@ line {
     font-size: 18px;
     line-height: 1.5;
 }
+
+
+/* Simulation Modal Styles */
+/* Simulation Modal Styles */
+.simulation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent backdrop */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20000; /* Higher than context menu */
+}
+
+.simulation-content {
+    background-color: var(--node-background);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    width: 60%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.simulation-dialogue {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.simulation-choices {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.simulation-choices button {
+    padding: 10px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.simulation-choices button:hover {
+    background-color: var(--secondary-color);
+}
+
+.simulation-navigation {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Align Back button to the left */
+}
+
+.simulation-back {
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #555555;
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.simulation-back:hover {
+    background-color: #666666;
+}
+
+/* Style for the "Next" button */
+.simulation-choices button.next-button {
+    background-color: var(--primary-color);
+    /* You can choose a different color or style */
+}
+
+.simulation-choices button.next-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.simulation-close {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #555555;
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.simulation-close:hover {
+    background-color: #666666;
+}
+
+.node.active-simulation {
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+    transform: scale(1.05);
+}
+
+.simulation-character {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Italicize action dialogues */
+.simulation-dialogue em {
+    font-style: italic;
+    color: #f1c40f; /* Optional: Change color for actions */
+  }
+  
+  /* Error Message Styling */
+  .simulation-dialogue .error-message {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
 
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
