@@ -22,23 +22,11 @@
   const exportButton = document.getElementById("exportButton");
   const importButton = document.getElementById("importButton");
   const importFileInput = document.getElementById("importFileInput");
-  const simulateAllButton = document.getElementById("simulateAllButton");
 
   addCharacterButton.addEventListener("click", addCharacter);
   exportButton.addEventListener("click", exportData);
   importButton.addEventListener("click", () => importFileInput.click());
   importFileInput.addEventListener("change", importData);
-  simulateAllButton.addEventListener("click", () => {
-    const rootNodes = nodes.filter((n) => n.parentIds.length === 0);
-    if (rootNodes.length === 0) {
-      alert("No nodes available for simulation.");
-      return;
-    }
-    if (rootNodes.length > 1) {
-      alert("Multiple root nodes found. Starting simulation from the first root.");
-    }
-    startSimulation(rootNodes[0].id);
-  });
 
   // Prevent the default context menu from appearing on the storyMap
   storyMap.addEventListener("contextmenu", (e) => {
