@@ -8,5 +8,5 @@ Features
 4. Simulate dialogue right in the app
 
 Drag a character card from the sidebar onto the canvas to start a new tree.
-Drag a character card from the sidebar onto an existingg card on the canvas to create a new card and automatically link them.
+Drag a character card from the sidebar onto an existing card on the canvas to create a new card and automatically link them.
 Right click on a card to access options such as reparenting, creating new links, deleting links, or deleting the card.

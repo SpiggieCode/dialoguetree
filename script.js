@@ -1356,7 +1356,7 @@ document.getElementById("simulate").addEventListener("click", () => {
       errorMessage.className = "error-message";
       errorMessage.style.color = "#e74c3c"; // Optional: Style the error message in red
       errorMessage.style.marginTop = "10px";
-      errorMessage.innerHTML = `<em>Current node has multiple children that are not all Choice nodes. Please ensure all children are Choice nodes or limit to a single Dialogue/Action child.</em>`;
+      errorMessage.innerHTML = "<em>Current node has multiple children that are not all Choice nodes. Please ensure all children are Choice nodes or limit to a single Dialogue/Action child.</em>";
       simulationChoices.appendChild(errorMessage);
       return;
     }
