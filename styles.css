@@ -196,8 +196,7 @@ body {
 
 #addCharacterButton,
 #exportButton,
-#importButton,
-#simulateAllButton {
+#importButton {
     width: calc(100% - 40px);
     margin: 0 20px 20px 20px;
     padding: 15px;
@@ -214,8 +213,7 @@ body {
 
 #addCharacterButton:hover,
 #exportButton:hover,
-#importButton:hover,
-#simulateAllButton:hover {
+#importButton:hover {
     background-color: #666666;
 }
 
